@@ -81,7 +81,6 @@ if(accept(identifier) || accept(const_num)){
         error("Syntax error in expression:Bracket mismatch or expecting operator");
     }
 }
-
 else if(accept(open_brac)){
     push_to_token_stack(prev_tok);
     expr();
@@ -109,7 +108,7 @@ init_queue();
 init_tok_stack();
 expr();
 while(!is_stack_empty()){
-    insert_to_Tokq(pop_from_token_stack());
+insert_to_Tokq(pop_from_token_stack());
 }
 struct AST_NODE *r=create_exp_tree_from_q();
 return r;
@@ -152,7 +151,7 @@ ifcond=create_if_node();
 ifcond->children[0]=condition();
 expect(close_brac,"Expecting ) after conditional statement");
 _expect(open_fbrac,"Expecting { after if statement");
-ifcond->next=statements();///<----------------------------------------------------Changes needed
+ifcond->children[1]=statements();///<----------------------------------------------------Changes needed
 _expect(close_fbrac,"Not found:} of if statement");
 }else{
 error("Unexpected token has appeared");
@@ -179,7 +178,6 @@ void add_node_to_next(struct AST_NODE **root,struct AST_NODE *t,struct AST_NODE 
 if(*root==0){
     *root=t;
     *end=t;
-
     return;
 }
 (*end)->next=t;
@@ -189,8 +187,7 @@ if(t!=0)
 
 struct AST_NODE *statements(){
     struct AST_NODE *root=0,*temp,*end;
-while(accept(next_line));
-while(curr_tok.type!=EOP){
+    while(accept(next_line));
     if(curr_tok.type==identifier){
         temp=assingment_statement();
         add_node_to_next(&root,temp,&end);
@@ -199,18 +196,15 @@ while(curr_tok.type!=EOP){
     }
     else if(curr_tok.type==_if){
         temp=if_statement();
+        add_node_to_next(&root,temp,&end);
         temp=statements();
+        add_node_to_next(&root,temp,&end);
     }
-    else if(curr_tok.type==next_line){
-    while(accept(next_line));
-    temp=statements();
-    }
-    else if(curr_tok.type==EOP || curr_tok.type==close_fbrac){
+    else if(curr_tok.type==EOP || curr_tok.type==close_fbrac || curr_tok.type==next_line){
     return 0;
     }else{
     error("Invalid Statement");
     }
-}
 return root;
 }
 

@@ -43,9 +43,13 @@ for(int i=0;i<=q.f;i++){
     }
 
 }
-
+if(node_stack.top!=1){
+    printf("Expression invalid %d\n",node_stack.top);
+    exit(0);
+}
 return pop_from_node_stack();
 }
+
 void traverse_tree(struct AST_NODE *root){
 if(root==0)
     return;
@@ -53,6 +57,7 @@ traverse_tree(root->children[0]);
 printf("%d\n",root->type);
 traverse_tree(root->children[1]);
 }
+
 int eval_tree(struct AST_NODE *root){
     init_node_stack();
 if(root==0)

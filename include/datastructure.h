@@ -29,6 +29,7 @@ void init_tok_stack();
 int is_stack_empty();
 struct Token top_stack();
 struct Token pop_from_token_stack();
+
 struct token_queue{
 int f,r;
 struct Token nodeq[maxsize];
