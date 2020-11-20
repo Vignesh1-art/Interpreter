@@ -3,7 +3,7 @@
 #include "datastructure.h"
 #include "ast.h"
 
-///Here expression tree contruction managed
+///Here expression tree construction managed
 void init_node_stack(){
 node_stack.top=-1;
 }

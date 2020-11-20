@@ -92,6 +92,20 @@ case '\n':tok.type=next_line;
 line++;
 index++;
 break;
+case '"':
+    index++;
+    while(inputbuffer[index]!='"'){
+        add_to_buf(inputbuffer[index]);
+        index++;
+    }
+    int l=strlen(buf);
+    if(l>0){
+    tok.lexeme=malloc(l*sizeof(char));
+    strcpy(tok.lexeme,buf);
+    }
+    tok.type=_string;
+    index++;
+break;
 case 0:tok.type=EOP;///END OF PROGRAM don't increment index
 break;
 ///Checking possible size 2 tokens

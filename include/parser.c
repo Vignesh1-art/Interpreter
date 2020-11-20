@@ -27,7 +27,9 @@ return -1;
 void next_token(){
 prev_tok=curr_tok;
 curr_tok=get_token();
-//printf("%d\n",curr_tok.type);
+/*printf("Tok type :%d\n",curr_tok.type);
+printf("Tok value :%s\n",curr_tok.lexeme);
+*/
 }
 void init_parser(char *input){
 init_tokenizer(input);
@@ -165,14 +167,32 @@ if(accept(identifier)){
     temp=create_ast(identifier);
     expect(_equal,"Expecting = after variable");
     assign=create_binary_node(_equal);
+    if(curr_tok.type==_string){
+        assign->children[0]=temp;
+        assign->children[1]=parse_string();
+    }
+    else{
     assign->children[0]=temp;
     assign->children[1]=expression();
-}else{
+    }
+}
+
+else{
 error("Invalid statement");
 }
 return assign;
 }
+struct AST_NODE *parse_string(){
+struct AST_NODE *s;
+if(accept(_string)){
 
+    s=create_ast(_string);
+    s->content=prev_tok.lexeme;
+    return s;
+}
+return 0;
+}
+///-------------------------------------------------------------------------------------------------------////
 void add_node_to_next(struct AST_NODE **root,struct AST_NODE *t,struct AST_NODE **end)///Statement helper function
 {
 if(*root==0){
@@ -202,7 +222,8 @@ struct AST_NODE *statements(){
     }
     else if(curr_tok.type==EOP || curr_tok.type==close_fbrac || curr_tok.type==next_line){
     return 0;
-    }else{
+    }
+    else{
     error("Invalid Statement");
     }
 return root;

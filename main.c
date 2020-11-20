@@ -25,6 +25,9 @@ fread(buffer, sizeof(char), numbytes, infile);
 fclose(infile);
 
 init_parser(buffer);
-struct AST_NODE *root=expression();
-printf("num :%d\n",eval_tree(root));
+struct AST_NODE *root=statements();
+
+
+
+
 }

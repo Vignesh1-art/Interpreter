@@ -2,7 +2,7 @@
 #define DS
 #define maxsize 20
 //Here all the Data structure used defined here
-enum TokenType{_if,_else,_while,identifier,var,const_num,open_fbrac,close_fbrac,
+enum TokenType{_if,_else,_while,identifier,var,const_num,open_fbrac,close_fbrac,_string,
 open_brac,close_brac,//9
 _add,_sub,_div,_mult,no_op,_equal,
 cond,equal_equal,less_than,greater_than,lessthan_or_equal,greaterthan_or_equal,next_line,EOP};
