@@ -4,3 +4,5 @@ This is implementation of simple dynamic language in C.
 **Reference**: *https://en.wikipedia.org/wiki/Recursive_descent_parser*
 
 **AST**: Homogeneous *Abstract Synatx Tree* used. Defination of AST node can be found in *datastructure.h*.
+
+NOTE:Project is not yet completed it is still in developement.
