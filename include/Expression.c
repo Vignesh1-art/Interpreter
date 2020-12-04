@@ -30,10 +30,16 @@ return node_stack.items[node_stack.top+1];
 struct AST_NODE *create_exp_tree_from_q(){
 for(int i=0;i<=q.f;i++){
     enum TokenType type=q.nodeq[i].type;
-    if(type==const_num || type==identifier){
-        struct AST_NODE *node=create_numeric_binode(toint(q.nodeq[i].lexeme),type);
+    if(type==const_num){
+        struct AST_NODE *node=create_numeric_binode(toint(q.nodeq[i].lexeme));
         push_to_node_stack(node);
-    }else{
+    }
+    else if(type==identifier)
+    {
+        struct AST_NODE *node=create_variable_binode(q.nodeq[i].lexeme);
+        push_to_node_stack(node);
+    }
+    else{
 
         struct AST_NODE *node=create_binary_node(type);
 

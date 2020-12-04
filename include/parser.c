@@ -120,14 +120,12 @@ struct AST_NODE *condition(){
     ///Root type: cond
     struct AST_NODE *temp,*cond;
 if(accept(identifier) || accept(const_num)){
-    temp=create_ast(prev_tok.type);
-    temp->content=prev_tok.lexeme;
+    temp=create_ast(prev_tok);
     if(accept(greaterthan_or_equal) || accept(lessthan_or_equal) || accept(greater_than) || accept(less_than) || accept(equal_equal)){
         cond=create_binary_node(cond);
         cond->children[0]=temp;
         if(accept(identifier) || accept(const_num)){
-            temp=create_ast(prev_tok.type);
-            temp->content=prev_tok.lexeme;
+            temp=create_ast(prev_tok);
             cond->children[1]=temp;
         }
         else{
@@ -164,7 +162,7 @@ struct AST_NODE *assingment_statement(){
 while(accept(next_line));
 struct AST_NODE *assign,*temp;
 if(accept(identifier)){
-    temp=create_ast(identifier);
+    temp=create_ast(prev_tok);
     expect(_equal,"Expecting = after variable");
     assign=create_binary_node(_equal);
     if(curr_tok.type==_string){
@@ -186,8 +184,7 @@ struct AST_NODE *parse_string(){
 struct AST_NODE *s;
 if(accept(_string)){
 
-    s=create_ast(_string);
-    s->content=prev_tok.lexeme;
+    s=create_ast(prev_tok);
     return s;
 }
 return 0;
@@ -205,7 +202,8 @@ if(t!=0)
 *end=t;
 }
 
-struct AST_NODE *statements(){
+struct AST_NODE *statements()
+{
     struct AST_NODE *root=0,*temp,*end;
     while(accept(next_line));
     if(curr_tok.type==identifier){
