@@ -6,7 +6,8 @@ void init_variable()
 {
     init_hashtable();
 }
-struct Variable *create_variable(enum TokenType var_type,void *value){
+struct Variable *create_variable(enum TokenType var_type,void *value)
+{
 struct Variable *x=(struct Variable *)malloc(sizeof(struct Variable));
 x->value=value;
 x->var_type=var_type;

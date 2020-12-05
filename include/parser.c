@@ -158,10 +158,12 @@ error("Unexpected token has appeared");
 }
 return ifcond;
 }
-struct AST_NODE *assingment_statement(){
+struct AST_NODE *assingment_statement()
+{
 while(accept(next_line));
 struct AST_NODE *assign,*temp;
-if(accept(identifier)){
+if(accept(identifier))
+    {
     temp=create_ast(prev_tok);
     expect(_equal,"Expecting = after variable");
     assign=create_binary_node(_equal);

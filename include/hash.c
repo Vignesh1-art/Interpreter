@@ -64,7 +64,7 @@ struct Variable * get_hash_value(char *key)
         else
             temp=temp->next;
     }
-    return -1;
+    return 0;
 }
 
 

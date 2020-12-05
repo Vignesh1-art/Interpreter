@@ -4,6 +4,7 @@
 #include "ast.h"
 #include "datastructure.h"
 #include "variable.h"
+#include "interpreter.h"
 void traver(struct AST_NODE *root)
 {
     if(root==0)
@@ -37,11 +38,6 @@ fclose(infile);
 
 init_parser(buffer);
 struct AST_NODE *root=statements();
-int t=9;
-init_variable();
-struct Variable *x=create_variable(_int,&t);
-define_variable("anme",x);
-x=get_variable("anme");
-int *g=x->value;
-printf("%d",*g);
+init_interpreter();
+interpret(root);
 }
