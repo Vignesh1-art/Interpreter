@@ -5,7 +5,6 @@ project(vinterpreter)
 add_executable(vinterpreter main.c)
 
 
-add_subdirectory(include)
 add_subdirectory(src)
 target_include_directories(vinterpreter PUBLIC "${PROJECT_BINARY_DIR}/src")
 
