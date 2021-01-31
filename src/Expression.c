@@ -64,22 +64,6 @@ printf("%d\n",root->type);
 traverse_tree(root->children[1]);
 }
 
-int eval_tree(struct AST_NODE *root){
-    init_node_stack();
-if(root==0)
-    return 0;
-if(root->children[0]==0 && root->children[1]==0){
-    int *a=root->content;
-    return *a;
-}
-int l_val=eval_tree(root->children[0]);
-int r_val=eval_tree(root->children[1]);
-switch(root->type){
-case _add:return (l_val+r_val);
-case _sub:return (l_val-r_val);
-case _mult:return (l_val*r_val);
-case _div:return (l_val/r_val);
-}
-}
+
 
 

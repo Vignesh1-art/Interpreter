@@ -105,7 +105,8 @@ error("Invalid token in expression");
 
 }
 
-struct AST_NODE *expression(){
+struct AST_NODE *expression()
+{
 init_queue();
 init_tok_stack();
 expr();
