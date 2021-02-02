@@ -36,6 +36,8 @@ if(strcmp(s,"if")==0)
     return _if;
 if(strcmp(s,"while")==0)
     return _while;
+if(strcmp(s,"display")==0)
+    return display;
 return identifier;
 }
 

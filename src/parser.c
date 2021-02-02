@@ -163,6 +163,7 @@ return ifcond;
 
 struct AST_NODE *assingment_statement()
 {
+///Left child is variable to be assigned and right is equation or value
 while(accept(next_line));
 struct AST_NODE *assign,*temp;
 if(accept(identifier))
@@ -194,9 +195,30 @@ if(accept(_string)){
 }
 return 0;
 }
+
+struct AST_NODE *display_statement(){
+///This is under development
+
+struct AST_NODE *x,*temp,*tail;
+x=create_ast(curr_tok);
+tail=x;
+next_token();
+while(curr_tok.type!=next_line && curr_tok.type!=EOP){
+temp=create_ast(curr_tok);
+tail->children=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));
+tail->children[0]=temp;
+tail=temp;
+next_token();
+}
+tail->children=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));
+tail->children[0]=0;
+return x;
+}
+
 ///-------------------------------------------------------------------------------------------------------////
 void add_node_to_next(struct AST_NODE **root,struct AST_NODE *t,struct AST_NODE **end)///Statement helper function
 {
+///Comments needed
 if(*root==0){
     *root=t;
     *end=t;
@@ -222,6 +244,13 @@ struct AST_NODE *statements()
         add_node_to_next(&root,temp,&end);
         temp=statements();
         add_node_to_next(&root,temp,&end);
+    }
+    else if(curr_tok.type==display){
+        temp=display_statement();
+        add_node_to_next(&root,temp,&end);
+        temp=statements();
+        add_node_to_next(&root,temp,&end);
+
     }
     else if(curr_tok.type==EOP || curr_tok.type==close_fbrac || curr_tok.type==next_line){
     return 0;

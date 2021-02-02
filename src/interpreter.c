@@ -81,8 +81,9 @@ void interpret(struct AST_NODE *root)
     int value;
     int *tmp_int_pointer;
     short int flag;
+    char *c;
     init_intr_stack();
-    struct AST_NODE *curr_node=root;
+    struct AST_NODE *curr_node=root,*temp;
   for(;;)///Interpreter main loop
     {
     if(curr_node==0)
@@ -99,7 +100,6 @@ void interpret(struct AST_NODE *root)
         *tmp_int_pointer=value;
         struct Variable *v=create_variable(_int,tmp_int_pointer);
         define_variable(curr_node->children[0]->content,v);
-        printf("value %d\n",get_int(curr_node->children[0]->content));
         curr_node=curr_node->next;
         break;
     case _if:
@@ -111,6 +111,23 @@ void interpret(struct AST_NODE *root)
         else
             curr_node=curr_node->next;
         break;
+    case display:
+        temp=curr_node->children[0];
+        while(temp!=0){
+            if(temp->type==identifier){
+            tmp_int_pointer=get_intptr(temp->content);
+             printf("%d",*tmp_int_pointer);
+            }
+        else{
+           c=temp->content;
+           printf("%s",c);
+        }
+           temp=temp->children[0];
+        }
+        curr_node=curr_node->next;
+        break;
+    default:printf("Interpreter could'nt handle statement");
+    exit(0);
 
     }
 
