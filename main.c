@@ -15,8 +15,8 @@ void traver(struct AST_NODE *root)
     traver(root->children[1]);
 }
 
-main(int argc, char *argv[]){
-printf("argument s is %d\nPath is %s",argc,argv[1]);
+main(int argc, char *argv[])
+{
 FILE    *infile;
 char    *buffer;
 long    numbytes;
@@ -41,4 +41,5 @@ init_parser(buffer);
 struct AST_NODE *root=statements();
 init_interpreter();
 interpret(root);
+return 0;
 }

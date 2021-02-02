@@ -15,6 +15,11 @@ struct AST_NODE *create_ast(struct Token t){
 struct AST_NODE *x=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));
 x->type=t.type;
 x->next=0;
+if(t.type==const_num){
+int *i=(int)malloc(sizeof(int));
+*i=toint(t.lexeme);
+x->content=i;
+}else
 x->content=t.lexeme;
 return x;
 }

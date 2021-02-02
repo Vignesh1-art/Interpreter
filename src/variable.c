@@ -23,6 +23,7 @@ return x;
 
 void define_variable(char *name,struct Variable *var)
 {
+    //printf("defined %s\n",name);
     add_to_hashtable(name,var);
 }
 
@@ -42,6 +43,7 @@ short int isdefined(char *name)
 int get_int(char *name)
 {
     struct Variable *x=get_hash_value(name);
+
     if(x==0 || x->var_type!=_int)
     {
         error("Variable error: Not defined as int");
@@ -49,3 +51,16 @@ int get_int(char *name)
     int *a=x->value;
     return *a;
 }
+
+int *get_intptr(char *name)
+{
+    struct Variable *x=get_hash_value(name);
+
+    if(x==0 || x->var_type!=_int)
+    {
+        error("Variable error: Not defined as int");
+    }
+    return x->value;
+}
+
+

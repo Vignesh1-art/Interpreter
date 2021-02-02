@@ -118,12 +118,12 @@ return r;
 }
 
 struct AST_NODE *condition(){
-    ///Root type: cond
+    ///Root type: compare operater
     struct AST_NODE *temp,*cond;
 if(accept(identifier) || accept(const_num)){
     temp=create_ast(prev_tok);
     if(accept(greaterthan_or_equal) || accept(lessthan_or_equal) || accept(greater_than) || accept(less_than) || accept(equal_equal)){
-        cond=create_binary_node(cond);
+        cond=create_binary_node(prev_tok.type);
         cond->children[0]=temp;
         if(accept(identifier) || accept(const_num)){
             temp=create_ast(prev_tok);
@@ -159,6 +159,8 @@ error("Unexpected token has appeared");
 }
 return ifcond;
 }
+
+
 struct AST_NODE *assingment_statement()
 {
 while(accept(next_line));

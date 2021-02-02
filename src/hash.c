@@ -26,7 +26,7 @@ void add_to_hashtable(char *key,struct Variable *value)
     struct Variable_pointer *temp=table[k];
     while(temp!=0)
     {
-        if(temp->name==key)
+        if(strcmp(temp->name,key)==0)
         {
             temp->ptr=value;
             return;
@@ -59,7 +59,7 @@ struct Variable * get_hash_value(char *key)
     struct Variable_pointer *temp=table[k];
     while(temp!=0)
     {
-        if(temp->name==key)
+        if(strcmp(temp->name,key)==0)
             return temp->ptr;
         else
             temp=temp->next;

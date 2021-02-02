@@ -1,27 +1,43 @@
 #include "datastructure.h"
 #include "variable.h"
 #include "ast.h"
+
+///Defination of internal functions
+struct interpreter_stack{
+struct AST_NODE *items[100];
+int top;
+}intr_st;
+
+void init_intr_stack(){
+intr_st.top=-1;
+}
+
+void intr_push(struct AST_NODE *item){
+intr_st.top++;
+intr_st.items[intr_st.top]=item;
+}
+
+struct AST_NODE *intr_pop()
+{
+    if(intr_st.top==-1)
+        return 0;
+    intr_st.top--;
+  return intr_st.items[intr_st.top+1];
+}
+
 void init_interpreter()
 {
     init_variable();
 }
 
-void interpret(struct AST_NODE *root)
-{
-    switch(root->type)
-    {
-        case _equal:interpret_equals(root);
-    }
-}
-
-int eval_tree(struct AST_NODE *root){
+int eval_tree(struct AST_NODE *root){///Internal function
+    int *a;
 if(root==0)
     return 0;
 if(root->children[0]==0 && root->children[1]==0)
 {
-    int *a;
     if(root->type==identifier)
-        *a=get_int(root->content);
+    return get_int(root->content);
     else
         a=root->content;
     return *a;
@@ -37,16 +53,69 @@ case _div:return (l_val/r_val);
 }
 }
 
-void interpret_equals(struct AST_NODE *root)
-{
-    if(root==0)
-        return;
-  struct AST_NODE *var=root->children[0];
-  struct AST_NODE *right_child=root->children[1];
-  char *s=var->content;
-  if(right_child->type==_add || right_child->type==_mult || right_child->type==_sub || right_child->type==_div)
-  {
-    int a=eval_tree(right_child);
-  }
-  interpret_equals(root->next);
+short int eval_condition(struct AST_NODE *root){
+    int *a,*b;
+
+if(root->children[0]->type==identifier)
+    a=get_intptr(root->children[0]->content);
+else
+    a=root->children[0]->content;
+
+if(root->children[1]->type==identifier)
+    b=get_intptr(root->children[1]->content);
+else
+    b=root->children[1]->content;
+
+switch(root->type){
+case equal_equal:
+    if(*a==*b)
+        return 1;
+    return 0;
+    break;
 }
+}
+
+
+void interpret(struct AST_NODE *root)
+{
+    int value;
+    int *tmp_int_pointer;
+    short int flag;
+    init_intr_stack();
+    struct AST_NODE *curr_node=root;
+  for(;;)///Interpreter main loop
+    {
+    if(curr_node==0)
+    {
+        curr_node=intr_pop();
+    }
+    if(curr_node==0)///Stop if no next node found
+        break;
+
+    switch(curr_node->type){
+    case _equal:
+        value=eval_tree(curr_node->children[1]);
+        tmp_int_pointer=(int)malloc(sizeof(int));
+        *tmp_int_pointer=value;
+        struct Variable *v=create_variable(_int,tmp_int_pointer);
+        define_variable(curr_node->children[0]->content,v);
+        printf("value %d\n",get_int(curr_node->children[0]->content));
+        curr_node=curr_node->next;
+        break;
+    case _if:
+        flag=eval_condition(curr_node->children[0]);
+        if(flag==1){
+            intr_push(curr_node->next);
+            curr_node=curr_node->children[1];
+        }
+        else
+            curr_node=curr_node->next;
+        break;
+
+    }
+
+
+  }///end interpreter loop
+}
+
+
