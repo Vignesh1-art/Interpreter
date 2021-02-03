@@ -68,10 +68,7 @@ else
 
 switch(root->type){
 case equal_equal:
-    if(*a==*b)
-        return 1;
-    return 0;
-    break;
+    return (*a==*b);
 }
 }
 
@@ -124,6 +121,7 @@ void interpret(struct AST_NODE *root)
         }
            temp=temp->children[0];
         }
+        printf("\n");
         curr_node=curr_node->next;
         break;
     default:printf("Interpreter could'nt handle statement");
