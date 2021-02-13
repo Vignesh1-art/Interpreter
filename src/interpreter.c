@@ -92,6 +92,11 @@ void interpret(struct AST_NODE *root)
 
     switch(curr_node->type){
     case _equal:
+        if(curr_node->children[1]->type==_string){
+            ///Code to handle string assingment
+            curr_node=curr_node->next;
+            break;
+        }
         value=eval_tree(curr_node->children[1]);
         tmp_int_pointer=(int)malloc(sizeof(int));
         *tmp_int_pointer=value;
@@ -115,12 +120,12 @@ void interpret(struct AST_NODE *root)
             tmp_int_pointer=get_intptr(temp->content);
              printf("%d",*tmp_int_pointer);
             }
-        else{
+            else{
            c=temp->content;
            printf("%s",c);
-        }
+            }
            temp=temp->children[0];
-        }
+            }
         printf("\n");
         curr_node=curr_node->next;
         break;

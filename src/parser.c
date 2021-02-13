@@ -197,18 +197,21 @@ return 0;
 }
 
 struct AST_NODE *display_statement(){
-///This is under development
+/*Root type is display
+  Children
+*/
 
 struct AST_NODE *x,*temp,*tail;
 x=create_ast(curr_tok);
 tail=x;
 next_token();
 while(curr_tok.type!=next_line && curr_tok.type!=EOP){
-temp=create_ast(curr_tok);
+if(!(accept(_string) || accept(identifier)))
+error("Expecting string or identifier in display statement");
+temp=create_ast(prev_tok);
 tail->children=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));
 tail->children[0]=temp;
 tail=temp;
-next_token();
 }
 tail->children=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));
 tail->children[0]=0;

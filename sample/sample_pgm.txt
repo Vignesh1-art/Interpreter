@@ -1,0 +1,5 @@
+a=3
+b=a*e+9
+if(a==3){
+display "Value of a is " b
+}
