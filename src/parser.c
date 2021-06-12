@@ -142,7 +142,7 @@ error("Expecting variable or number");
 return cond;
 }
 
-struct AST_NODE *if_statement(){
+struct AST_NODE *if_statement() {
 while(accept(next_line));
 ///First child is condition second is true case third is false case
 struct AST_NODE *temp,*ifcond;
@@ -160,6 +160,24 @@ error("Unexpected token has appeared");
 return ifcond;
 }
 
+
+struct AST_NODE *while_statement() {
+while(accept(next_line));
+struct AST_NODE *while_node=0;
+if(accept(_while)){
+    while_node=create_whie_node();
+    expect(open_brac,"Expecting ( after while");
+    while_node->children[0]=condition();
+    expect(close_brac,"Expecting ) after conditional statement");
+    _expect(open_fbrac,"Expecting { after while statement");
+    while_node->children[1]=statements();
+    _expect(close_fbrac,"Not found:} end of while not found");
+
+}else{
+error("Unexpected token has appeared");
+}
+return while_node;
+}
 
 struct AST_NODE *assingment_statement()
 {
@@ -218,6 +236,7 @@ tail->children[0]=0;
 return x;
 }
 
+
 ///-------------------------------------------------------------------------------------------------------////
 void add_node_to_next(struct AST_NODE **root,struct AST_NODE *t,struct AST_NODE **end)///Statement helper function
 {
@@ -250,6 +269,13 @@ struct AST_NODE *statements()
     }
     else if(curr_tok.type==display){
         temp=display_statement();
+        add_node_to_next(&root,temp,&end);
+        temp=statements();
+        add_node_to_next(&root,temp,&end);
+
+    }
+    else if(curr_tok.type==_while) {
+        temp=while_statement();
         add_node_to_next(&root,temp,&end);
         temp=statements();
         add_node_to_next(&root,temp,&end);

@@ -57,6 +57,16 @@ node->children[2]=0;
 return node;
 }
 
+
+struct AST_NODE *create_whie_node() {
+struct AST_NODE *node=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));
+node->type=_while;
+node->children=(struct AST_NODE *)malloc(2*sizeof(struct AST_NODE *));
+node->children[0]=0;
+node->children[1]=0;
+return node;
+}
+
 struct AST_NODE *create_variable_binode(char *name)
 {
 struct AST_NODE *node=(struct AST_NODE *)malloc(sizeof(struct AST_NODE));

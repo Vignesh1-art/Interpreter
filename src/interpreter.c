@@ -154,8 +154,19 @@ void interpret(struct AST_NODE *root)
         curr_node=curr_node->next;
         break;
 
+    case _while:
+        flag=eval_condition(curr_node->children[0]);
+        if(flag==1) {
+        /*In case of while (unlike it is done in if) we push curr_node to stack as we want
+        control to come here to check condition and execute again if true*/
+        intr_push(curr_node);
+        curr_node=curr_node->children[1];
+        }else {
+        curr_node=curr_node->next;
+        }
+    break;
 
-    default:printf("Interpreter could not handle statement");
+    default:printf("Interpreter could not handle statement %d",curr_node->type);
     exit(0);
 
     }
