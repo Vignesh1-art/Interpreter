@@ -8,6 +8,7 @@ struct AST_NODE *items[100];
 int top;
 }intr_st;
 
+
 void init_intr_stack(){
 intr_st.top=-1;
 }
@@ -69,6 +70,14 @@ else
 switch(root->type){
 case equal_equal:
     return (*a==*b);
+case lessthan_or_equal:
+    return (*a<=*b);
+case greaterthan_or_equal:
+    return (*a>=*b);
+case greater_than:
+    return (*a>b);
+case less_than:
+    return (*a<*b);
 }
 }
 
@@ -91,9 +100,12 @@ void interpret(struct AST_NODE *root)
         break;
 
     switch(curr_node->type){
+
+
     case _equal:
         if(curr_node->children[1]->type==_string){
-            ///Code to handle string assingment
+            struct Variable *st=create_variable(_string,curr_node->children[1]->content);
+            define_variable(curr_node->children[0]->content,st);
             curr_node=curr_node->next;
             break;
         }
@@ -104,7 +116,10 @@ void interpret(struct AST_NODE *root)
         define_variable(curr_node->children[0]->content,v);
         curr_node=curr_node->next;
         break;
+
+
     case _if:
+
         flag=eval_condition(curr_node->children[0]);
         if(flag==1){
             intr_push(curr_node->next);
@@ -113,23 +128,34 @@ void interpret(struct AST_NODE *root)
         else
             curr_node=curr_node->next;
         break;
+
+
     case display:
+
         temp=curr_node->children[0];
         while(temp!=0){
             if(temp->type==identifier){
-            tmp_int_pointer=get_intptr(temp->content);
-             printf("%d",*tmp_int_pointer);
-            }
-            else{
-           c=temp->content;
-           printf("%s",c);
+            struct Variable *var=get_variable(temp->content);
+                if(var!=0) {
+                        if(var->var_type==_int){
+                                tmp_int_pointer=var->value;
+                                printf("%d",*tmp_int_pointer);
+                        }
+                        else {
+                            c=var->value;
+                            printf("%s",c);
+                        }
+
+                }
             }
            temp=temp->children[0];
             }
         printf("\n");
         curr_node=curr_node->next;
         break;
-    default:printf("Interpreter could'nt handle statement");
+
+
+    default:printf("Interpreter could not handle statement");
     exit(0);
 
     }

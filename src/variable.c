@@ -23,7 +23,6 @@ return x;
 
 void define_variable(char *name,struct Variable *var)
 {
-    //printf("defined %s\n",name);
     add_to_hashtable(name,var);
 }
 
