@@ -147,6 +147,10 @@ void interpret(struct AST_NODE *root)
                         }
 
                 }
+            } else if(temp->type==_string) {
+
+            c=temp->content;
+            printf("%s",c);
             }
            temp=temp->children[0];
             }
