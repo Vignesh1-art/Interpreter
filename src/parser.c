@@ -12,12 +12,12 @@ struct AST_NODE temp_node,root;
 
 
 int  is_curr_tok_bioperator(){
-    if(curr_tok.type==_add || curr_tok.type==_mult || curr_tok.type==_div || curr_tok.type==_sub)
+    if(curr_tok.type==_add || curr_tok.type==_mult || curr_tok.type==_div || curr_tok.type==_sub || curr_tok.type==mod)
         return 1;
     return 0;
 }
 int get_precedence(enum TokenType op){
-if(op==_mult || op==_div)
+if(op==_mult || op==_div || op==mod)
     return 2;
 if(op==_add || op==_sub)
     return 1;
@@ -79,7 +79,7 @@ if(accept(identifier) || accept(const_num)){
         next_token();
         expr();
         }
-    else if(curr_tok.type!=close_brac || curr_tok.type!=next_line || curr_tok.type!=EOP){
+    else if(curr_tok.type!=close_brac && curr_tok.type!=next_line && curr_tok.type!=EOP){
         error("Syntax error in expression:Bracket mismatch or expecting operator");
     }
 }

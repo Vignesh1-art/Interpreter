@@ -92,6 +92,7 @@ index++;
 break;
 case '%':tok.type=mod;
 index++;
+break;
 case '\n':tok.type=next_line;
 line++;
 index++;

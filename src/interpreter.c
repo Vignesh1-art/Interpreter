@@ -51,8 +51,12 @@ case _add:return (l_val+r_val);
 case _sub:return (l_val-r_val);
 case _mult:return (l_val*r_val);
 case _div:return (l_val/r_val);
+case mod:return (l_val%r_val);
+default:error("Parser supplied invalid expression");
 }
+
 }
+
 
 short int eval_condition(struct AST_NODE *root){
     int *a,*b;
