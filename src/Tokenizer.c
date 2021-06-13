@@ -90,6 +90,8 @@ break;
 case '/':tok.type=_div;
 index++;
 break;
+case '%':tok.type=mod;
+index++;
 case '\n':tok.type=next_line;
 line++;
 index++;
@@ -141,7 +143,7 @@ case '>':
     tok.type=greater_than;
     }
 break;
-default:printf("Stray appered %c\n",inputbuffer[index]);
+default:printf("Tokenizer:Stray appeared in %c index:%d\n",inputbuffer[index],index);
 exit(0);
 }
 resetbuf();///<---------------------------------------RETURN

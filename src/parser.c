@@ -79,7 +79,7 @@ if(accept(identifier) || accept(const_num)){
         next_token();
         expr();
         }
-    else if(curr_tok.type!=close_brac && curr_tok.type!=next_line && curr_tok.type!=EOP){
+    else if(curr_tok.type!=close_brac || curr_tok.type!=next_line || curr_tok.type!=EOP){
         error("Syntax error in expression:Bracket mismatch or expecting operator");
     }
 }

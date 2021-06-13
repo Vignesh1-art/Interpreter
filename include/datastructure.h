@@ -4,8 +4,8 @@
 ///Here Tokens defined
 enum TokenType{_if,_else,_while,identifier,display,var,const_num,_int,open_fbrac,close_fbrac,_string,
 open_brac,close_brac,//9
-_add,_sub,_div,_mult,no_op,_equal,
-cond,equal_equal,less_than,greater_than,lessthan_or_equal,greaterthan_or_equal,next_line,EOP};
+_add,_sub,_div,_mult,no_op,_equal,mod,
+cond,equal_equal,less_than,greater_than,lessthan_or_equal,greaterthan_or_equal,next_line,_endl,EOP};
 
 struct Token{
 int line;
