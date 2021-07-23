@@ -129,8 +129,12 @@ void interpret(struct AST_NODE *root)
             intr_push(curr_node->next);
             curr_node=curr_node->children[1];
         }
-        else
+        else if(curr_node->children[2]){
+            intr_push(curr_node->next);
+            curr_node=curr_node->children[2];
+        }else{
             curr_node=curr_node->next;
+        }
         break;
 
 

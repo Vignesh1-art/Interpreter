@@ -147,13 +147,21 @@ while(accept(next_line));
 ///First child is condition second is true case third is false case
 struct AST_NODE *temp,*ifcond;
 if(accept(_if)){
-expect(open_brac,"Expecting ( after if");
-ifcond=create_if_node();
-ifcond->children[0]=condition();
-expect(close_brac,"Expecting ) after conditional statement");
-_expect(open_fbrac,"Expecting { after if statement");
-ifcond->children[1]=statements();///<----------------------------------------------------Changes needed
-_expect(close_fbrac,"Not found:} of if statement");
+    expect(open_brac,"Expecting ( after if");
+    ifcond=create_if_node();
+    ifcond->children[0]=condition();
+    expect(close_brac,"Expecting ) after conditional statement");
+    _expect(open_fbrac,"Expecting { after if statement");
+    ifcond->children[1]=statements();///<----------------------------------------------------Changes needed
+    _expect(close_fbrac,"Not found:} of if statement");
+    ifcond->children[2]=NULL;
+    while(accept(next_line));
+    if(accept(_else)){
+            _expect(open_fbrac,"Not found:{ of else statement");
+            ifcond->children[2]=statements();
+            _expect(close_fbrac,"Not found:} of else statement");
+    }
+
 }else{
 error("Unexpected token has appeared");
 }

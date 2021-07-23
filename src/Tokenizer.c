@@ -34,6 +34,8 @@ return 1;
 enum TokenType get_tok_type(char *s){
 if(strcmp(s,"if")==0)
     return _if;
+if(strcmp(s,"else")==0)
+    return _else;
 if(strcmp(s,"while")==0)
     return _while;
 if(strcmp(s,"display")==0)
